@@ -41,7 +41,8 @@ pub fn try_get_workspace_manifest(manifest_dir: &Path) -> Result<WorkspaceManife
 }
 
 fn fix_dependencies(dependencies: &mut Map<String, Dependency>, dir: &Path) {
-    dependencies.remove("kaos");
+    // TODO: Don't remove the dependency it is not a dev dependency.
+    // dependencies.remove("kaos");
     for dep in dependencies.values_mut() {
         dep.path = dep.path.as_ref().map(|path| dir.join(path));
     }

@@ -19,7 +19,7 @@ pub enum Error {
     ProjectDir,
     ReadStderr(io::Error),
     RunFailed,
-    ChaosTestFailed,
+    ChaosTestFailed(String),
     ShouldNotHaveCompiled,
     TomlDe(toml::de::Error),
     TomlSer(toml::ser::Error),
@@ -47,7 +47,7 @@ impl Display for Error {
             ProjectDir => write!(f, "failed to determine name of project dir"),
             ReadStderr(e) => write!(f, "failed to read stderr file: {}", e),
             RunFailed => write!(f, "execution of the test case was unsuccessful"),
-            ChaosTestFailed => write!(f, "chaos test failed"),
+            ChaosTestFailed(e) => write!(f, "chaos test failed: {}", e),
             ShouldNotHaveCompiled => {
                 write!(f, "expected test case to fail to compile, but it succeeded")
             }

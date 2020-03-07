@@ -16,6 +16,7 @@ use crate::normalize::{self, Context, Variations};
 use crate::rustflags;
 use std::convert::TryInto;
 use proptest::test_runner::{TestRunner, TestCaseError};
+use humantime::format_duration;
 
 #[derive(Debug)]
 pub struct Project {
@@ -123,10 +124,10 @@ impl Runner {
         match &mut project.features {
             Some(enabled_features) => {
                 enabled_features.retain(|feature| manifest.features.contains_key(feature));
-                enabled_features.push("fail/failpoints".into());
+                // enabled_features.push("fail/failpoints".into());
             }
             _ => {
-                project.features = Some(vec!["fail/failpoints".into()]);
+                // project.features = Some(vec!["fail/failpoints".into()]);
             }
         }
 
@@ -252,8 +253,15 @@ impl Test {
                 };
 
                 let res = check(self, project, name, success, stdout, stderr);
-                if now.elapsed() < duration {
-                    Err(TestCaseError::Fail("chaos test failed".into()))
+                let elapsed = now.elapsed();
+                if elapsed < duration {
+                    Err(TestCaseError::Fail(
+                        format!(
+                            "chaos test failed: availability is low. Expected at least: {}, Found: {}",
+                            format_duration(duration).to_string(),
+                            format_duration(elapsed).to_string()
+                        ).into()
+                    ))
                 } else {
                     res.map_err(|e| TestCaseError::Fail(format!("{}", e).into()))
                 }
@@ -286,8 +294,15 @@ impl Test {
             };
 
             let res = check(self, project, name, success, stdout, stderr);
-            if now.elapsed() < duration {
-                Err(Error::ChaosTestFailed)
+            let elapsed = now.elapsed();
+            if elapsed < duration {
+                Err(Error::ChaosTestFailed(
+                    format!(
+                        "availability is low. Expected at least: {}, Found: {}",
+                        format_duration(duration).to_string(),
+                        format_duration(elapsed).to_string()
+                    )
+                ))
             } else {
                 res
             }

@@ -1,9 +1,13 @@
 
 //! #### &emsp;Chaotic testing harness
 //!
-//! Kaos is a chaotic testing test harness to test your services against random failures.
-//! It allows you to add failpoints that panic randomly inside your code and randomizes
-//! asserts availability and tolerance for resiliency for these faults.
+//! Kaos is a chaotic testing harness to test your services against random failures.
+//! It allows you to add points to your code to crash sporadically and
+//! harness asserts availability and fault tolerance of your services by seeking
+//! minimum time between failures, fail points, and randomized runs.
+//!
+//! Kaos is equivalent of Chaos Monkey for the Rust ecosystem. But it is more smart to find the closest MTBF based on previous runs.
+//! This is dependable system practice. For more information please visit [Chaos engineering](https://en.wikipedia.org/wiki/Chaos_engineering).
 //!
 //! # Kaos Tests
 //!
@@ -36,7 +40,7 @@
 //!
 //! That's all, now what you have to do is run with `cargo test`.
 //!
-//! Kaos is using the same approach that [https://docs.rs/trybuild] has.
+//! Kaos is using the same approach that [trybuild](https://docs.rs/trybuild) has.
 //! Instead of being compiler-like test harness, it has diverged to be chaos engineering
 //! oriented harness.
 
@@ -63,11 +67,21 @@ mod message;
 mod normalize;
 mod run;
 mod rustflags;
+mod macros;
 
 use std::cell::RefCell;
 use std::path::{Path, PathBuf};
 use std::{time::Duration, thread};
 
+#[doc(hidden)]
+pub use fail::eval as flunker;
+#[doc(hidden)]
+pub use fail::cfg as flunker_cfg;
+#[doc(hidden)]
+pub use fail::FailScenario as Scene;
+
+
+pub use macros::*;
 
 ///
 /// Chaotic runs test setup
