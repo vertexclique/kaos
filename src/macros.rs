@@ -14,7 +14,7 @@ macro_rules! flunk {
 #[macro_export]
 macro_rules! kaostest {
     ($name:expr, $body:block) => {{
-        let scenario = $crate::Scene::setup();
+        let scenario = $crate::KaosFailScenario::setup();
         $crate::flunker_cfg($name, "panic").unwrap();
 
         $body

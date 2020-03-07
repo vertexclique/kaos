@@ -78,7 +78,7 @@ pub use fail::eval as flunker;
 #[doc(hidden)]
 pub use fail::cfg as flunker_cfg;
 #[doc(hidden)]
-pub use fail::FailScenario as Scene;
+pub use fail::FailScenario as KaosFailScenario;
 
 
 pub use macros::*;
