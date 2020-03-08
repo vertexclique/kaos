@@ -78,6 +78,34 @@
 //!          }
 //! );
 //! ```
+//! # Chaos Tests
+//!
+//! In addition to availability tests mentioned above we can test the software with chaos tests too.
+//! For using chaotic measures and finding bare minimum failure, timing and MTBF combination
+//! you can configure chaos tests in your launcher:
+//!
+//! ```
+//! #[test]
+//! fn chaos_tests() {
+//!     let k = kaos::Runs::new();
+//!
+//!     for entry in fs::read_dir("kaos-tests").unwrap() {
+//!         let entry = entry.unwrap();
+//!         let path = entry.path();
+//!
+//!         // Let's have 10 varying runs.
+//!         let run_count = 10;
+//!
+//!         // Minimum availability to expect as milliseconds for the runs.
+//!         // Which corresponds as maximum surge between service runs.
+//!         // Let's have it 10 seconds.
+//!         let max_surge = 10 * 1000;
+//!
+//!         // Run chaotic test.
+//!         k.chaotic(path, run_count, max_surge);
+//!     }
+//! }
+//! ```
 //!
 //! That's all, now what you have to do is run with `cargo test`.
 //!
