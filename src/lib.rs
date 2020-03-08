@@ -120,9 +120,7 @@
 //! <img src="https://raw.githubusercontent.com/vertexclique/kaos/master/img/chaotic_run.png" width="700">
 //! </p>
 //!
-//! ## Anything else?
-//!
-//! No that's all, now what you have to do is run with `cargo test`.
+//! Now you know all the basics, what you have to do is *unleash some chaos* with `cargo test`.
 //!
 //! Kaos is using the same approach that [trybuild](https://docs.rs/trybuild) has.
 //! Instead of being compiler-like test harness, it has diverged to be chaos engineering
