@@ -39,6 +39,14 @@
 //! path = "kaos-tests/launcher.rs"
 //! ```
 //!
+//! Mind that there two types of tests, first one is: availability test, the latter one is chaotic test which seeks the minimum timing, failure, MTBF combination.
+//! The setup shows availability tests as an example. When availability tests run you will see:
+//!
+//! <p align="center">
+//! <img src="https://raw.githubusercontent.com/vertexclique/kaos/master/img/availability_run.png" width="700">
+//! </p>
+//!
+//!
 //! ## Definining flunks
 //! In kaos there is a concept of [flunk]. Every flunk is a point of failure with panic. This can be redefinable.
 //! After adding kaos as dependency you can add flunk points to define fallible operations or crucial points that system should continue its operation.
@@ -106,8 +114,15 @@
 //!     }
 //! }
 //! ```
+//! This launcher produce multiple results like:
 //!
-//! That's all, now what you have to do is run with `cargo test`.
+//! <p align="center">
+//! <img src="https://raw.githubusercontent.com/vertexclique/kaos/master/img/chaotic_run.png" width="700">
+//! </p>
+//!
+//! ## Anything else?
+//!
+//! No that's all, now what you have to do is run with `cargo test`.
 //!
 //! Kaos is using the same approach that [trybuild](https://docs.rs/trybuild) has.
 //! Instead of being compiler-like test harness, it has diverged to be chaos engineering
