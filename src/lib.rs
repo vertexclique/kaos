@@ -114,7 +114,7 @@
 //! oriented harness.
 
 #![doc(
-    html_logo_url = "https://raw.githubusercontent.com/vertexclique/kaos/master/img/achaos.gif"
+    html_logo_url = "https://raw.githubusercontent.com/vertexclique/kaos/master/img/chaos.png"
 )]
 
 extern crate humantime;
