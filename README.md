@@ -18,5 +18,7 @@ Kaos is equivalent of Chaos Monkey for the Rust ecosystem. But it is more smart 
 
 <div align="center">
 <hr>
+<strong>
 <a href="https://docs.rs/kaos/">Get started!</a>
+</strong>
 </div>
