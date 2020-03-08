@@ -1,7 +1,7 @@
 
 //! #### &emsp;Chaotic testing harness
 //!
-//! Kaos is a chaotic testing harness to test your services against random failures.
+//! **Kaos** is a chaotic testing harness to test your services against random failures.
 //! It allows you to add points to your code to crash sporadically and
 //! harness asserts availability and fault tolerance of your services by seeking
 //! minimum time between failures, fail points, and randomized runs.
@@ -9,15 +9,16 @@
 //! Kaos is equivalent of Chaos Monkey for the Rust ecosystem. But it is more smart to find the closest MTBF based on previous runs.
 //! This is dependable system practice. For more information please visit [Chaos engineering](https://en.wikipedia.org/wiki/Chaos_engineering).
 //!
-//! # Kaos Tests
+//! # Test Setup
 //!
-//! Create a directory that will hold all chaos tests called `kaos-tests`.
+//! It is better to separate resilience tests.
+//! Create a directory that will hold all chaos tests. In our example it will be `kaos-tests`.
 //!
 //! A minimal launcher for kaos setup looks like this:
 //!
 //! ```
 //! #[test]
-//! fn kaos() {
+//! fn chaos_tests() {
 //!     let k = kaos::Runs::new();
 //!
 //!     for entry in fs::read_dir("kaos-tests").unwrap() {
@@ -34,8 +35,48 @@
 //!
 //! ```toml
 //! [[test]]
-//! name = "kaos"
+//! name = "chaos_tests"
 //! path = "kaos-tests/launcher.rs"
+//! ```
+//!
+//! ## Definining flunks
+//! In kaos there is a concept of [flunk]. Every flunk is a point of failure with panic. This can be redefinable.
+//! After adding kaos as dependency you can add flunk points to define fallible operations or crucial points that system should continue its operation.
+//!
+//! Basic flunk is like:
+//! ```rust
+//! use kaos::flunk;
+//! fn vec_check(v: &Vec<usize>) {
+//!   if v.len() == 3 {
+//!     flunk!("fail-when-three-elems");
+//!   }
+//! }
+//! ```
+//! This flunk point will be used later by kaos.
+//!
+//! ## Writing tests
+//! Test harness will execute tests marked by a launcher. An example test for the flunk mentioned above is like this:
+//! ```
+//! # use std::panic;
+//! # use kaos::flunk;
+//! # fn vec_check(v: &Vec<usize>) {
+//! #   if v.len() == 3 {
+//! #     flunk!("fail-when-three-elems");
+//! #   }
+//! # }
+//! use kaos::kaostest;
+//!
+//! kaostest!("fail-when-three-elems",
+//!          {
+//!              panic::catch_unwind(|| {
+//!                let mut v = &mut vec![];
+//!                loop {
+//!                   v.push(1);
+//!                   vec_check(v);
+//!                }
+//!              });
+//!          }
+//! );
 //! ```
 //!
 //! That's all, now what you have to do is run with `cargo test`.
