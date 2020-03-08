@@ -16,4 +16,6 @@
 
 Kaos is equivalent of Chaos Monkey for the Rust ecosystem. But it is more smart to find the closest MTBF based on previous runs. This is dependable system practice. For more information please visit [Chaos engineering](https://en.wikipedia.org/wiki/Chaos_engineering).
 
-![Chaotic Run](https://github.com/vertexclique/kaos/raw/master/img/chaotic.png)
+<div align="center">
+  ![How to Use?](https://docs.rs/kaos/)
+</div>
