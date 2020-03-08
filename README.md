@@ -18,5 +18,5 @@ Kaos is equivalent of Chaos Monkey for the Rust ecosystem. But it is more smart 
 
 <div align="center">
 <hr>
-[![Getting Started](https://img.shields.io/badge/getting-started-red.svg)](https://docs.rs/kaos/)
+<a href="https://docs.rs/kaos/">Get started!</a>
 </div>
