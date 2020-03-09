@@ -23,7 +23,6 @@ macro_rules! kaostest {
     }};
 }
 
-
 #[cfg(test)]
 mod macro_tests {
     #[test]

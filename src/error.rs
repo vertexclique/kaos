@@ -25,7 +25,7 @@ pub enum Error {
     TomlSer(toml::ser::Error),
     UpdateVar(OsString),
     WriteStderr(io::Error),
-    Shrink(proptest::test_runner::TestError<isize>)
+    Shrink(proptest::test_runner::TestError<isize>),
 }
 
 pub type Result<T> = std::result::Result<T, Error>;
@@ -53,11 +53,7 @@ impl Display for Error {
             }
             TomlDe(e) => write!(f, "{}", e),
             TomlSer(e) => write!(f, "{}", e),
-            UpdateVar(var) => write!(
-                f,
-                "unrecognized value of KAOS: {:?}",
-                var.to_string_lossy(),
-            ),
+            UpdateVar(var) => write!(f, "unrecognized value of KAOS: {:?}", var.to_string_lossy(),),
             WriteStderr(e) => write!(f, "failed to write stderr file: {}", e),
             Shrink(e) => write!(f, "test failed with a randomization: {}", e),
         }
@@ -104,7 +100,6 @@ impl From<toml::ser::Error> for Error {
         Error::TomlSer(err)
     }
 }
-
 
 impl From<proptest::test_runner::TestError<isize>> for Error {
     fn from(err: proptest::test_runner::TestError<isize>) -> Self {

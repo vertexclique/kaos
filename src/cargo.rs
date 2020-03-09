@@ -31,7 +31,11 @@ fn cargo(project: &Project) -> Command {
 
 pub fn build_dependencies(project: &Project) -> Result<()> {
     let status = cargo(project)
-        .arg(if project.has_run_at_least { "build" } else { "check" })
+        .arg(if project.has_run_at_least {
+            "build"
+        } else {
+            "check"
+        })
         .arg("--bin")
         .arg(&project.name)
         .status()
@@ -55,7 +59,11 @@ pub fn build_test(project: &Project, name: &Name) -> Result<Output> {
         .status();
 
     cargo(project)
-        .arg(if project.has_run_at_least { "build" } else { "check" })
+        .arg(if project.has_run_at_least {
+            "build"
+        } else {
+            "check"
+        })
         .arg("--bin")
         .arg(name)
         .args(features(project))
