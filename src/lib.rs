@@ -1,4 +1,3 @@
-
 //! #### &emsp;Chaotic testing harness
 //!
 //! **Kaos** is a chaotic testing harness to test your services against random failures.
@@ -126,9 +125,7 @@
 //! Instead of being compiler-like test harness, it has diverged to be chaos engineering
 //! oriented harness.
 
-#![doc(
-    html_logo_url = "https://raw.githubusercontent.com/vertexclique/kaos/master/img/chaos.png"
-)]
+#![doc(html_logo_url = "https://raw.githubusercontent.com/vertexclique/kaos/master/img/chaos.png")]
 
 extern crate humantime;
 
@@ -144,24 +141,23 @@ mod diff;
 mod env;
 mod error;
 mod features;
+mod macros;
 mod manifest;
 mod message;
 mod normalize;
 mod run;
 mod rustflags;
-mod macros;
 
 use std::cell::RefCell;
 use std::path::{Path, PathBuf};
-use std::{time::Duration, thread};
+use std::{thread, time::Duration};
 
-#[doc(hidden)]
-pub use fail::eval as flunker;
 #[doc(hidden)]
 pub use fail::cfg as flunker_cfg;
 #[doc(hidden)]
+pub use fail::eval as flunker;
+#[doc(hidden)]
 pub use fail::FailScenario as KaosFailScenario;
-
 
 pub use macros::*;
 
@@ -188,7 +184,7 @@ struct Test {
 #[derive(Copy, Clone, Debug)]
 enum Expected {
     Available,
-    Chaotic
+    Chaotic,
 }
 
 impl Runs {

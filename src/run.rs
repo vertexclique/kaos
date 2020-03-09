@@ -2,7 +2,10 @@ use std::collections::BTreeMap as Map;
 use std::env;
 use std::ffi::{OsStr, OsString};
 use std::fs::{self, File};
-use std::{time::{Instant, Duration}, path::{Path, PathBuf}};
+use std::{
+    path::{Path, PathBuf},
+    time::{Duration, Instant},
+};
 
 use super::{Expected, Runner, Test};
 use crate::cargo;
@@ -14,9 +17,9 @@ use crate::manifest::{Bin, Build, Config, Manifest, Name, Package, Workspace};
 use crate::message::{self, Fail, Warn};
 use crate::normalize::{self, Context, Variations};
 use crate::rustflags;
-use std::convert::TryInto;
-use proptest::test_runner::{TestRunner, TestCaseError};
 use humantime::format_duration;
+use proptest::test_runner::{TestCaseError, TestRunner};
+use std::convert::TryInto;
 
 #[derive(Debug)]
 pub struct Project {
@@ -83,11 +86,9 @@ impl Runner {
             }
         }
 
-        let surges: Vec<isize> =
-            tests.iter().map(|t| t.test.max_surge).collect();
+        let surges: Vec<isize> = tests.iter().map(|t| t.test.max_surge).collect();
 
-        let mut static_durations: Vec<Option<Duration>> =
-            vec![None; surges.len()];
+        let mut static_durations: Vec<Option<Duration>> = vec![None; surges.len()];
 
         surges
             .iter()
@@ -296,13 +297,11 @@ impl Test {
             let res = check(self, project, name, success, stdout, stderr);
             let elapsed = now.elapsed();
             if elapsed < duration {
-                Err(Error::ChaosTestFailed(
-                    format!(
-                        "availability is low. Expected at least: {}, Found: {}",
-                        format_duration(duration).to_string(),
-                        format_duration(elapsed).to_string()
-                    )
-                ))
+                Err(Error::ChaosTestFailed(format!(
+                    "availability is low. Expected at least: {}, Found: {}",
+                    format_duration(duration).to_string(),
+                    format_duration(elapsed).to_string()
+                )))
             } else {
                 res
             }

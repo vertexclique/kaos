@@ -6,10 +6,10 @@ use crate::error::Error;
 use crate::normalize;
 use crate::term;
 
+use humantime::format_duration;
 use std::env;
 use std::path::Path;
 use std::process::Output;
-use humantime::format_duration;
 
 pub(crate) enum Level {
     Fail,
@@ -72,7 +72,10 @@ pub(crate) fn begin_test(test: &Test, show_expected: bool) {
 
     if show_expected {
         match test.expected {
-            Expected::Available => print!(" [should survive at least {}]", format_duration(test.duration.unwrap()).to_string()),
+            Expected::Available => print!(
+                " [should survive at least {}]",
+                format_duration(test.duration.unwrap()).to_string()
+            ),
             Expected::Chaotic => print!(" [should survive from chaos]"),
         }
     }
